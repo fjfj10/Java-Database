@@ -85,6 +85,7 @@ public class ProductColorRegisterFrame extends JFrame {
 				}
 				
 				JOptionPane.showMessageDialog(contentPane, "새로운 색상을 등록했습니다.", "등록성공", JOptionPane.PLAIN_MESSAGE);
+				clearTextField(productColorNameTextField);
 			}
 		});
 		registerSubmitButton.setBounds(12, 98, 410, 41);
@@ -100,5 +101,9 @@ public class ProductColorRegisterFrame extends JFrame {
 		}
 		JOptionPane.showMessageDialog(contentPane, "내용을 입력하세요.", "입력오류", JOptionPane.ERROR_MESSAGE);
 		return true;
+	}
+	
+	private void clearTextField(JTextField textField) {
+		textField.setText("");
 	}
 }
