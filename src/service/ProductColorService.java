@@ -27,7 +27,8 @@ public class ProductColorService {
 	
 	public boolean registerProductColor(ProductColor productColor) {
 		boolean result = false;
-		
+		//
+		result = productColorRepository.saveProductColor(productColor) > 0;
 		return result;
 	}
 }

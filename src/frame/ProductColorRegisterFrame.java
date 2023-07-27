@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import entity.ProductColor;
 import service.ProductColorService;
 
 import javax.swing.JLabel;
@@ -73,7 +74,17 @@ public class ProductColorRegisterFrame extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "이미 존재하는 색상명입니다.", "중복오류", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				ProductColor productColor = ProductColor.builder()
+						.productColorName(productColorName)
+						.build();
 				
+				// false가 나와  실패했을때
+				if(!ProductColorService.getInstance().registerProductColor(productColor)) {
+					JOptionPane.showMessageDialog(contentPane, "색상등록 중 오류가 발생했습니다.", "등록오류", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				JOptionPane.showMessageDialog(contentPane, "새로운 색상을 등록했습니다.", "등록성공", JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		registerSubmitButton.setBounds(12, 98, 410, 41);

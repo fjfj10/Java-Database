@@ -55,4 +55,32 @@ public class ProductColorRepository {
 		}
 		return productColor;
 	}
+	//매개변수는 객체 현태로 
+	public int saveProductColor(ProductColor productColor) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int sussessCount = 0;
+		
+		try {
+			//연결
+			con = pool.getConnection();
+			//쿼리문 작성
+			String sql = "insert into product_Color_tb values (0, ?)";
+			// ? 채우기
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, productColor.getProductColorName());
+			//결과 받기
+			sussessCount = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return sussessCount;
+	}
+	
+	
+	
 }
