@@ -1,0 +1,93 @@
+package frame;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import service.ProductColorService;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class ProductColorRegisterFrame extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField productColorNameTextField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ProductColorRegisterFrame frame = new ProductColorRegisterFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ProductColorRegisterFrame() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 189);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel titleLabel = new JLabel("상품 색상 등록");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setBounds(12, 10, 410, 41);
+		contentPane.add(titleLabel);
+		
+		JLabel productColorNameLabel = new JLabel("색상명");
+		productColorNameLabel.setBounds(12, 55, 57, 33);
+		contentPane.add(productColorNameLabel);
+		
+		productColorNameTextField = new JTextField();
+		productColorNameTextField.setBounds(72, 55, 350, 33);
+		contentPane.add(productColorNameTextField);
+		productColorNameTextField.setColumns(10);
+		
+		JButton registerSubmitButton = new JButton("등록하기");
+		registerSubmitButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String productColorName = productColorNameTextField.getText();
+				if(isTextEmpty(productColorName)) { return; }
+				if(ProductColorService.getInstance().isProductColorNameDuplicated(productColorName)) {
+					JOptionPane.showMessageDialog(contentPane, "이미 존재하는 색상명입니다.", "중복오류", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+			}
+		});
+		registerSubmitButton.setBounds(12, 98, 410, 41);
+		contentPane.add(registerSubmitButton);
+	}
+//	빈값이면(str이 null이나 blank = true) 오류메세지를 띄우고 if(isTextEmpty(productColorName)= true) return된다
+//	내용이 있으면 false로 if(isTextEmpty(productColorName) = false) return이 되지않고 if문을 빠져나간다
+	private boolean isTextEmpty(String str) {
+		if(str != null) {
+			if(!str.isBlank()) {
+				return false;
+			}
+		}
+		JOptionPane.showMessageDialog(contentPane, "내용을 입력하세요.", "입력오류", JOptionPane.ERROR_MESSAGE);
+		return true;
+	}
+}
