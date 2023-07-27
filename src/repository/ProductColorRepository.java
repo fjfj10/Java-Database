@@ -3,6 +3,9 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import config.DBConnectionMgr;
 import entity.ProductColor;
@@ -22,6 +25,43 @@ public class ProductColorRepository {
 			instance = new ProductColorRepository();
 		}
 		return instance;		
+	}
+	
+	public List<ProductColor> getProductColorListAll() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ProductColor> productColorList = null;
+		
+		try {
+			con = pool.getConnection();
+			String sql = "select "
+					+ "product_color_id, "
+					+ "product_color_name "
+					+ "from "
+					+ "product_color_tb "
+					+ "order by "
+					+ "product_color_name";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			productColorList = new ArrayList<>();
+			
+			while (rs.next()) {
+				ProductColor productColor = ProductColor.builder()
+						.productColorId(rs.getInt(1))
+						.productColorName(rs.getString(2))
+						.build();
+				
+				productColorList.add(productColor);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		
+		return productColorList;
 	}
 	
 	public ProductColor findProductColorbyProductColorName(String productColorName) {

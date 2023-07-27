@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import entity.ProductColor;
 import service.ProductColorService;
+import utils.CustomSwingTextUtil;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -69,7 +70,7 @@ public class ProductColorRegisterFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String productColorName = productColorNameTextField.getText();
-				if(isTextEmpty(productColorName)) { return; }
+				if(CustomSwingTextUtil.isTextEmpty(contentPane, productColorName)) { return; }
 				if(ProductColorService.getInstance().isProductColorNameDuplicated(productColorName)) {
 					JOptionPane.showMessageDialog(contentPane, "이미 존재하는 색상명입니다.", "중복오류", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -78,32 +79,18 @@ public class ProductColorRegisterFrame extends JFrame {
 						.productColorName(productColorName)
 						.build();
 				
-				// false가 나와  실패했을때
+				// false가 나와 실패했을때
 				if(!ProductColorService.getInstance().registerProductColor(productColor)) {
 					JOptionPane.showMessageDialog(contentPane, "색상등록 중 오류가 발생했습니다.", "등록오류", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
 				JOptionPane.showMessageDialog(contentPane, "새로운 색상을 등록했습니다.", "등록성공", JOptionPane.PLAIN_MESSAGE);
-				clearTextField(productColorNameTextField);
+				CustomSwingTextUtil.clearTextField(productColorNameTextField);
 			}
 		});
 		registerSubmitButton.setBounds(12, 98, 410, 41);
 		contentPane.add(registerSubmitButton);
 	}
-//	빈값이면(str이 null이나 blank = true) 오류메세지를 띄우고 if(isTextEmpty(productColorName)= true) return된다
-//	내용이 있으면 false로 if(isTextEmpty(productColorName) = false) return이 되지않고 if문을 빠져나간다
-	private boolean isTextEmpty(String str) {
-		if(str != null) {
-			if(!str.isBlank()) {
-				return false;
-			}
-		}
-		JOptionPane.showMessageDialog(contentPane, "내용을 입력하세요.", "입력오류", JOptionPane.ERROR_MESSAGE);
-		return true;
-	}
 	
-	private void clearTextField(JTextField textField) {
-		textField.setText("");
-	}
 }
