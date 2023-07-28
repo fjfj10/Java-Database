@@ -6,7 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import frame.ProductCategoryRegisterFrame;
+import frame.ProductColorRegisterFrame;
 import frame.ProductRegisterFrame;
+import frame.ProductSearchFrame;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -44,6 +47,17 @@ public class ProductManagementApplication extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JButton productSerchFrameOpenButton = new JButton("상품조회");
+		productSerchFrameOpenButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProductSearchFrame productSearchFrame = new ProductSearchFrame();
+				productSearchFrame.setVisible(true);
+			}
+		});
+		productSerchFrameOpenButton.setBounds(12, 25, 410, 44);
+		contentPane.add(productSerchFrameOpenButton);
+		
 		JButton productRegisterFrameOpenButton = new JButton("상품등록");
 		productRegisterFrameOpenButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -53,11 +67,31 @@ public class ProductManagementApplication extends JFrame {
 				productRegisterFrame.setVisible(true);
 			}
 		});
-		productRegisterFrameOpenButton.setBounds(73, 110, 97, 23);
+		productRegisterFrameOpenButton.setBounds(12, 79, 410, 44);
 		contentPane.add(productRegisterFrameOpenButton);
 		
-		JButton productListFrameOpenButton = new JButton("상품조회");
-		productListFrameOpenButton.setBounds(239, 110, 97, 23);
-		contentPane.add(productListFrameOpenButton);
+		
+		JButton productColorRegisterFrameOpenButton = new JButton("상품색상등록");
+		productColorRegisterFrameOpenButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProductColorRegisterFrame productColorRegisterFrame = new ProductColorRegisterFrame();
+				productColorRegisterFrame.setVisible(true);
+			}
+		});
+		productColorRegisterFrameOpenButton.setBounds(12, 133, 410, 44);
+		contentPane.add(productColorRegisterFrameOpenButton);
+		
+		
+		JButton productCategoryRegisterFrameOpenButton = new JButton("상품카테고리등록");
+		productCategoryRegisterFrameOpenButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ProductCategoryRegisterFrame productCategoryRegisterFrame = new ProductCategoryRegisterFrame();
+				productCategoryRegisterFrame.setVisible(true);
+			}
+		});
+		productCategoryRegisterFrameOpenButton.setBounds(12, 187, 410, 44);
+		contentPane.add(productCategoryRegisterFrameOpenButton);
 	}
 }
