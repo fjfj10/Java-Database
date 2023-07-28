@@ -32,31 +32,18 @@ import java.awt.event.MouseEvent;
 public class ProductSearchFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JButton producModifyButton;
+	private JButton productRemoveButton;
+
 	private JComboBox comboBox;
 	private JTextField searchTextField;
+	
 	private DefaultTableModel searchProductTableModel;
 	private JTable productTable;
+	
+	private static ProductSearchFrame instance;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProductSearchFrame frame = new ProductSearchFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public ProductSearchFrame() {
+	private ProductSearchFrame() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1000, 500);
 		contentPane = new JPanel();
@@ -69,7 +56,7 @@ public class ProductSearchFrame extends JFrame {
 		titleLabel.setBounds(12, 10, 128, 25);
 		contentPane.add(titleLabel);
 		
-		JButton producModifyButton = new JButton("수정");
+		producModifyButton = new JButton("수정");
 		producModifyButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -83,10 +70,9 @@ public class ProductSearchFrame extends JFrame {
 			}
 		});
 		producModifyButton.setBounds(766, 11, 97, 23);
-		producModifyButton.setEnabled(false);
 		contentPane.add(producModifyButton);
 		
-		JButton productRemoveButton = new JButton("삭제");
+		productRemoveButton = new JButton("삭제");
 		productRemoveButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,12 +86,9 @@ public class ProductSearchFrame extends JFrame {
 				}
 				JOptionPane.showMessageDialog(contentPane, "선택한 상품을 삭제했습니다.", "삭제성공", JOptionPane.PLAIN_MESSAGE);
 				setSearchProductTableModel();
-				productRemoveButton.setEnabled(false);
-				producModifyButton.setEnabled(false);
 			}
 		});
 		productRemoveButton.setBounds(875, 11, 97, 23);
-		productRemoveButton.setEnabled(false);
 		contentPane.add(productRemoveButton);
 		
 		JLabel searchLabel = new JLabel("검색");
@@ -124,8 +107,7 @@ public class ProductSearchFrame extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					setSearchProductTableModel();
-					productRemoveButton.setEnabled(false);
-					producModifyButton.setEnabled(false);
+					
 				}
 			}
 			
@@ -152,8 +134,14 @@ public class ProductSearchFrame extends JFrame {
 		
 	}
 	
+	public static ProductSearchFrame getInstance() {
+		if(instance == null) {
+			instance = new ProductSearchFrame();
+		}
+		return instance;
+	}
 	
-	private void setSearchProductTableModel() {
+	public void setSearchProductTableModel() {
 		String searchOption = (String) comboBox.getSelectedItem();
 		String searchValue = searchTextField.getText();
 		
@@ -167,5 +155,7 @@ public class ProductSearchFrame extends JFrame {
 			}
 		);
 		productTable.setModel(searchProductTableModel);
+		productRemoveButton.setEnabled(false);
+		producModifyButton.setEnabled(false);
 	}
 }

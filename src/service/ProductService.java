@@ -43,4 +43,8 @@ public class ProductService {
 		return productRepository.findProductId(productId);
 	}
 	
+	public boolean modifyProduct(Product product) {
+		return productRepository.updateProduct(product) > 0;
+	}
+	
 }

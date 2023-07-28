@@ -51,7 +51,7 @@ public class ProductManagementApplication extends JFrame {
 		productSerchFrameOpenButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ProductSearchFrame productSearchFrame = new ProductSearchFrame();
+				ProductSearchFrame productSearchFrame = ProductSearchFrame.getInstance();
 				productSearchFrame.setVisible(true);
 			}
 		});

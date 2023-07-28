@@ -304,6 +304,7 @@ public class ProductRepository {
 		try {
 			con = pool.getConnection();
 			String sql = "{ call p_update_product(?, ?, ?, ?, ? ) }";
+			cstmt = con.prepareCall(sql);
 			cstmt.setInt(1, product.getProductId());
 			cstmt.setString(2, product.getProductName());
 			cstmt.setInt(3, product.getProductPrice());

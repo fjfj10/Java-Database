@@ -145,15 +145,14 @@ public class ProductModifyFrame extends JFrame {
 						.productCategory(ProductCategory.builder().productCategoryName(productCategoryName).build())
 						.build();				
 				
-				if(!ProductService.getInstance().registerProduct(product)) {
-					JOptionPane.showMessageDialog(contentPane, "상품등록 중 오류가 발생했습니다.", "등록오류", JOptionPane.ERROR_MESSAGE);
+				if(!ProductService.getInstance().modifyProduct(product)) {
+					JOptionPane.showMessageDialog(contentPane, "상품수정 중 오류가 발생했습니다.", "수정오류", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				JOptionPane.showMessageDialog(contentPane, "새로운 상품을 등록했습니다.", "등록성공", JOptionPane.PLAIN_MESSAGE);
-				CustomSwingTextUtil.clearTextField(productNameTextField);
-				CustomSwingTextUtil.clearTextField(productPriceTextField);
-				colorComboBox.setSelectedIndex(0);
-				categoryComboBox.setSelectedIndex(0);
+				JOptionPane.showMessageDialog(contentPane, "상품을 수정했습니다.", "수정성공", JOptionPane.PLAIN_MESSAGE);
+				ProductSearchFrame.getInstance().setSearchProductTableModel();
+				//수정창을 닫음
+				dispose();
 				
 			}
 		});
